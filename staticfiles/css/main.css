@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Poppins, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+main h1{
+  text-align: center;
+  font-family: Poppins;
+  font-size: 3rem;
+}
+
+main h3{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+    .formbold-main-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+  
+    .formbold-form-wrapper {
+      margin: 0 auto;
+      max-width: 650px;
+      width: 100%;
+      background: white;
+    }
+  
+  
+    .formbold-input-flex {
+      display:flex;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    .formbold-input-flex > div {
+      position: relative;
+      width: 70%;
+      display: flex;
+      align-items: center;
+    }
+    .input-group{
+      position: relative;
+    }
+
+    .input-group > p{
+      position: absolute;
+      bottom: -25px;
+      color: red;
+      display: none;
+    }
+
+
+
+    .formbold-form-input {
+      width: 100%;
+      padding: 13px 5px;
+      border-radius: 5px;
+      border: 1px solid #DDE3EC;
+      background: #FFFFFF;
+      font-weight: 500;
+      font-size: 18px;
+      color: #536387;
+      outline: none;
+      resize: none;
+    }
+    .formbold-form-input:focus {
+      border:2px solid #000000;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    .formbold-form-input.empty-input{
+      border: 2px solid red;
+    }
+    .formbold-form-label {
+      color: #07074D;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      display: block;
+      margin-right: 5px;
+    }
+
+    
+    
+    .formbold-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 18px;
+      border-radius: 5px;
+      padding: 10px 25px;
+      border: none;
+      font-weight: 600;
+      background-color: #000;
+      color: white;
+      cursor: pointer;
+    }
+    .formbold-btn:hover {
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    #genURLDisplay{
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      gap: 20px;
+      visibility: hidden;
+    }
+
+    #genURLDisplay div{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #urlstring{
+      font-weight: 500;
+    }
+
+    footer{
+      position: absolute;
+      bottom: 30px;
+      text-align: center;
+    }
+    footer a{
+      text-decoration: none;
+      color: #000;
+    }
+
+    @media (width<718px) {
+
+      main h1{
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+      }
+
+      .formbold-main-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+      }
+
+      .formbold-input-flex {
+        display:flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 22px;
+        align-items: center;
+        justify-content: center;
+      }
+      .formbold-input-flex > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 75%;
+      }
+
+      .input-group{
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      .formbold-form-input {
+        padding: 13px 22px;
+        border-radius: 5px;
+        border: 1px solid #DDE3EC;
+        background: #FFFFFF;
+        font-weight: 500;
+        font-size: 18px;
+        color: #536387;
+      }
+
+      .formbold-btn{
+        width: max-content;
+      }
+
+
+      #genURLDisplay div{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+    }

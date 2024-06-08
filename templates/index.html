@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortUrl</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Shorten Your URL</h1>
+
+
+        <div class="formbold-main-wrapper">
+            <form method="POST">
+                
+                {% csrf_token %}
+                <div>
+                    <div class="formbold-input-flex">
+    
+                        <div>
+                            <label for="actualUrl" class="formbold-form-label"> Actual URL </label>
+    
+                            <div class="input-group">
+                                <input
+                                type="text"
+                                name="actualUrl"
+                                placeholder="www.example.com"
+                                id="actualUrl"
+                                class="formbold-form-input"/>
+                                <p id="urlWarning">Should Not be Empty</p>
+                            </div>
+                        
+                        </div>
+    
+                        <div>
+                            <label for="urlLabel" class="formbold-form-label"> 127.0.0.1:8000/ </label>
+                            <div class="input-group">
+                                <input
+                                type="text"
+                                name="urlLabel"
+                                placeholder="Enter Label"
+                                id="urlLabel"
+                                class="formbold-form-input"
+                                />
+                                <p id="labelWarning">Should Not be Empty</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="formbold-btn">
+                    Get URL
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_1675_1807)">
+                    <path d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_1675_1807">
+                    <rect width="16" height="16" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <div id="genURLDisplay">
+
+            <h3>Your URL</h3>
+            <div>
+            <p id="urlstring">{{Link}}</p>
+            <button id="copyBtn" class="formbold-btn">Copy</button>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://github.com/IGaneshD">
+            <ion-icon style="font-size:36px" name="logo-github"></ion-icon>
+        </a>
+        <a href="https://www.linkedin.com/in/ganesha-deshmukh/">
+            <ion-icon style="font-size:36px" name="logo-linkedin"></ion-icon>
+        </a>
+        <h3>Created with ❤️ by Ganesh</h3>
+    </footer>
+    
+    
+
+</body>
+
+<script>
+    let urlgenrated = `{{Link}}`;
+    let actualUrl = document.getElementById('actualUrl');
+    let urlLabel = document.getElementById('urlLabel')
+    let form = document.getElementsByTagName('form')[0]
+    let emptyString = "Should Not Empty"
+    let labelnotavailString = "Label not available"
+
+    let genURLDisplay = document.getElementById('genURLDisplay')
+    let copyBtn = document.getElementById('copyBtn')
+
+    if(urlgenrated!=='None'){
+        genURLDisplay.style.visibility = 'visible'
+    }
+
+    copyBtn.onclick = ()=>{
+        window.navigator.clipboard.writeText(urlgenrated)
+        copyBtn.innerText = 'Copied!';
+        setTimeout(() => {
+            copyBtn.innerText = 'Copy';
+        }, 2000);
+        
+    }
+
+    document.getElementsByTagName('button')[0].onclick = (e)=>{
+
+        validateForm();
+
+    }
+
+    function validateForm(){
+
+        urlWarning.innerText = emptyString
+        labelWarning.innerText = emptyString
+
+        if(urlLabel.value=='' && actualUrl.value==''){
+            actualUrl.classList.add('empty-input')
+            urlLabel.classList.add('empty-input')
+
+            urlWarning.style.display ="block";
+            labelWarning.style.display = "block";
+        }
+        else if(urlLabel.value==''){
+            urlLabel.classList.add('empty-input')
+            actualUrl.classList.remove('empty-input')
+
+            urlWarning.style.display ="none";
+            labelWarning.style.display = "block";
+        }
+        else if(actualUrl.value==''){
+            actualUrl.classList.add('empty-input')
+            urlLabel.classList.remove('empty-input')
+
+            urlWarning.style.display ="block";
+            labelWarning.style.display = "none";
+        }
+        else{
+            actualUrl.classList.remove('empty-input')
+            urlLabel.classList.remove('empty-input')
+
+            urlWarning.style.display ="none";
+            labelWarning.style.display = "none";
+
+            if(! (actualUrl.value.includes("https://", 0) || actualUrl.value.includes("http://",0))){
+                actualUrl.value = "https://" + actualUrl.value;
+            }
+            checkLabel()
+        }
+    }
+
+    function checkLabel(){
+        let url = `/checkLabel/${urlLabel.value}`;
+
+        fetch(url, {
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data['isLabelnotPresent']){
+                form.submit()
+            }
+            else{
+                labelWarning.style.display="block";
+                labelWarning.innerText = labelnotavailString;
+            }
+        })
+    }
+
+</script>
+</html>
